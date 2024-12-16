@@ -32,11 +32,15 @@ class Vehicle:
             print(f'Нельзя сменить цвет на {self.new_color}')
 
 class Sedan(Vehicle):
-    # def __init__(self):
-    pass
+    __PASSENGERS_LIMIT = 5
+
 
 vehicle1 = Sedan('Fedos', 'Toyota Mark II', 'blue', 500)
 vehicle1.print_info()
 vehicle1.set_color('Green')
 
+vehicle1.set_color('Pink')
+vehicle1.set_color('BLACK')
+vehicle1.owner = 'Vasyok'
 
+vehicle1.print_info()
