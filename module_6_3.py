@@ -14,6 +14,12 @@ class Animal:
         coords = [dx, dy, dz]
         if self.speed > 0:
              _coords = map(lambda x: x * self.speed, coords)
+        if dz * self.speed < 0:
+            print("It's too deep, i can't dive :(")
+        else:
+            Animal.x = dx * self.speed
+            Animal.y = dy * self.speed
+            Animal.z = dz * self.speed
         print(list(_coords))
         return _coords
 
@@ -48,7 +54,7 @@ class PoisonousAnimal(Animal):
     _DEGREE_OF_DANGER = 8
 
 
-class Duckbill(Bird, AquaticAnimal, PoisonousAnimal):
+class Duckbill(PoisonousAnimal, Bird, AquaticAnimal ):
     sound = "Click-click-click"
 
 
@@ -60,5 +66,5 @@ print(db.beak)
 
 db.speak()
 db.attack()
-db.move(1, 2, 3)
+db.move(1, 2, -3)
 
