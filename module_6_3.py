@@ -12,11 +12,10 @@ class Animal:
 
     def move(self, dx, dy, dz):
         coords = [dx, dy, dz]
-        new_coords = []
         if self.speed > 0:
-             new_coords = map(lambda x: x * self.speed, coords)
-        print(list(new_coords))
-        return new_coords
+             _coords = map(lambda x: x * self.speed, coords)
+        print(list(_coords))
+        return _coords
 
     def get_coords(self):
          pass
@@ -26,6 +25,10 @@ class Animal:
             print('Sorry, Im peaceful :)')
         else:
             print('Be careful, Im attacking you 0_0')
+
+    def speak(self):
+        sound = self.sound
+        print(sound)
 
 
 class Bird(Animal):
@@ -53,7 +56,9 @@ class Duckbill(Bird, AquaticAnimal, PoisonousAnimal):
 db = Duckbill(10)
 
 print(db.live)
-# print(db.beak)
+print(db.beak)
 
-db.move(1, 2, 3)
+db.speak()
 db.attack()
+db.move(1, 2, 3)
+
