@@ -1,79 +1,120 @@
-class Figure():
+import math
 
-    def __init__(self, sides_count = 0, sides = 0, color = [0, 0, 0], filled = True):
-        self.sides_count = sides_count
-        self.__sides = sides
+
+class Figure():
+    sides_count = 0
+
+    def __init__(self, color: tuple, * sides: int, filled: bool = True):
+        if len(sides) != self.sides_count:
+            self.__sides = [1 * self.sides_count]
+        else:
+            self.__sides = [i for i in sides]
         self.__color = color
         self.filled = filled
 
-    def set_color(self, color):
-        self.__color = color
+    def set_color(self, r, g, b):
+        if self.__is_valid_color(r, g, b):
+            self.__color = (r, g, b)
 
     def get_color(self):
-        return self.__color
+        return [i for i in self.__color]
 
-    def __is_valid_color(self, __color):
-        for i in self.__color:
-            if 0 <= i <= 255 and isinstance(i, int) :
-                True
-            else:
-                False
+    def __is_valid_color(self, r, g, b):
+        lst = [r, g, b]
+        # lst.sort()
+        if lst[0] < 0 or lst[-1] > 255:
+            return False
+        else:
+            return True
 
-    def __is_valid_sides(self):# c количеством сторон не пойму
-        if self.__sides > 0 and isinstance(self.__sides, int):
+    def __is_valid_sides(self, sides):
+        res = []
+        for i in sides:
+            if i > 0:
+                res.append(i)
+        if len(res) > 0 and len(sides) == len(self.__sides):
             return True
         else:
             return False
 
-    def get_sides(self, sides):
-        self.__is_valid_sides()
-        self.__sides = sides
-        return self.__sides
+    def get_sides(self):
+        return [*self.__sides]
 
-    def __len__(self):# не пойму, где брать длины сторон
-        pass
+    def __len__(self):
+        return sum(self.__sides)
 
-    def set_sides(self, *new_sides):
-        if self.sides_count != new_sides:
-            print(self.__sides)
-            print(self.sides_count)
-        else:
-            self.sides_count = new_sides
-            print(self.sides_count)
+    def set_sides(self, *sides):
+        if self.__is_valid_sides(sides):
+            self.__sides = sides
 
 
 class Circle(Figure):
-
     sides_count = 1
 
     def __radius(self):
-        pass
+        return self.__len__ * (2 / math.pi)
 
     def get_square(self):
-        pass
+        return (self.__len__ ** 2) / (4 * math.pi)
 
 
 class Triangle(Figure):
-
     sides_count = 3
 
     def get_square(self):
-        pass
+        sp = self.__len__ / 2
+        s = math.sqrt((sp(sp - self.__sides[0])(sp - self.__sides[1])(sp - self.__sides[2])))
+        return s
+
+    def __height(self):
+        sp = self.__len__ / 2
+        h = (2 ** (sp(sp - self.__sides[0])(sp - self.__sides[1])(sp - self.__sides[2]))
+             ) / 2 * sp
+        return h
 
 
 class Cube(Figure):
-
     sides_count = 12
 
-    def __init__(self):
-        pass
+    def __init__(self, color, *sides: int, filled: bool = True):
+        super().__init__(color, *sides, filled)
+        if len(sides) == 1:
+            self.__sides = self.sides_count * [i for i in sides]
+        else:
+            self.__sides = [1 * self.sides_count]
+
+    def get_sides(self):
+        return [*self.__sides]
+
+    def get_volume(self):
+        return self.__sides[1] ** 3
 
 
-f1 = Figure()
+circle1 = Circle((200, 200, 100), 10)  # (Цвет, стороны)
+cube1 = Cube((222, 35, 130), 6)
 
-f1.set_color([125, 45, 85])
-(f1.get_color())
-(f1.get_sides(0))
+print('Проверка на изменение цветов')
+# Проверка на изменение цветов:
+circle1.set_color(55, 66, 77)  # Изменится
+cube1.set_color(300, 70, 15)  # Не изменится
+print(circle1.get_color())
+print(cube1.get_color())
+
+print('Проверка на изменение сторон:')
+# Проверка на изменение сторон:
+cube1.set_sides(5, 3, 12, 4, 5)  # Не изменится
+circle1.set_sides(15)  # Изменится
+print(cube1.get_sides())
+print(circle1.get_sides())
+
+print('Проверка периметра (круга), это и есть длина:')
+# Проверка периметра (круга), это и есть длина:
+print(len(circle1))
+
+print('Проверка объёма (куба):')
+# Проверка объёма (куба):
+print(cube1.get_volume())
+
 
 
 
