@@ -1,7 +1,7 @@
 import math
 
 
-class Figure():
+class Figure:
     sides_count = 0
 
     def __init__(self, color: tuple, * sides: int, filled: bool = True):
@@ -21,7 +21,6 @@ class Figure():
 
     def __is_valid_color(self, r, g, b):
         lst = [r, g, b]
-        # lst.sort()
         if lst[0] < 0 or lst[-1] > 255:
             return False
         else:
@@ -52,7 +51,7 @@ class Circle(Figure):
     sides_count = 1
 
     def __radius(self):
-        return self.__len__ * (2 / math.pi)
+        return self.__len__ * 2 / math.pi
 
     def get_square(self):
         return (self.__len__ ** 2) / (4 * math.pi)
